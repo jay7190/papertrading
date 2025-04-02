@@ -1,0 +1,69 @@
+/* NoPositions.css */
+.no-positions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #ffffff;
+    color: #333;
+    text-align: center;
+}
+
+.icon-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+}
+
+.jar {
+    width: 80px;
+    height: 100px;
+    background-color: #e0e7ff;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.coin {
+    width: 40px;
+    height: 40px;
+    background-color: #a5b4fc;
+    border-radius: 50%;
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    animation: bounce 2s infinite;
+}
+
+.dot {
+    position: absolute;
+    color: #a5b4fc;
+}
+
+.dot1 {
+    top: 20%;
+    left: 15%;
+}
+
+.dot2 {
+    bottom: 10%;
+    right: 15%;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}

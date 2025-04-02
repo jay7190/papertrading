@@ -1,0 +1,92 @@
+.holdings-container {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 1000px;
+    margin: 20px auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+body{
+    font-family: Arial, sans-serif; 
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+.holdings-summary {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.holdings-summary p {
+    text-align: center;
+    font-weight: bold;
+}
+
+.holdings-summary span {
+    display: block;
+    font-weight: normal;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.holdings-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.holdings-table th, .holdings-table td {
+    padding: 10px 15px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.holdings-table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+    color: #333;
+}
+
+.positive {
+    color: #00c853;
+    font-weight: bold;
+}
+
+.negative {
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+.holdings-table tr:last-child td {
+    border-bottom: none;
+}
+
+
+.buy-btn, .sell-btn {
+    padding: 6px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.buy-btn {
+    background-color: #28a745;
+}
+
+.sell-btn {
+    background-color: #dc3545;
+}

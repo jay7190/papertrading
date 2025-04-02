@@ -1,0 +1,118 @@
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+  }
+  
+  /* Left Section */
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+  }
+  
+  .brand-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 20px;
+    color: rgb(63, 224, 63);
+    font-family:'Franklin Gothic Medium';
+  }
+  
+  
+  /* Navigation Links */
+  .nav-links {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    color: #4a4a4a;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+  }
+  
+  .nav-item i {
+    margin-right: 6px;
+  }
+  
+  .nav-item.active {
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .nav-item:hover {
+    color: #007bff;
+  }
+  
+  /* Badge Notification */
+  .badge {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+  }
+  
+  /* Right Section */
+
+.navbar-right {
+  display: flex;
+  align-items: center; /* Ensure buttons are properly spaced */
+  flex-direction: row; /* Ensures Profile and Logout buttons are side by side */
+  justify-content: flex-end;
+}
+
+.logout-button {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #a71d2a;
+}
+
+.profile-button {
+  background-color: #007bff;
+  color: white;
+  padding: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+}
+
+.profile-button:hover {
+  background-color: #0056b3;
+}
+  
+  /* Responsive Navbar (Mobile View) */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+  
+    .navbar {
+      padding: 12px;
+    }
+  }
+  

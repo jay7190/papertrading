@@ -1,0 +1,40 @@
+.products-container {
+    width: 80%;
+    /* margin: 20px auto; */
+    font-family: Arial, sans-serif;
+    /* text-align: center; */
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .products-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid black;
+  }
+  
+  .products-table th,
+  .products-table td {
+    padding: 12px;
+    border: 1px solid black;
+    text-align: center;
+  }
+  
+  .products-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .up {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .down {
+    color: red;
+    font-weight: bold;
+  }
+  
