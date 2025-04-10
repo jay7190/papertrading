@@ -36,8 +36,8 @@ const ProfileBtn = () => {
       </Button>
       {open && userData && (
         <div className="profile-dropdown">
-          <p className="font-bold">{userData.name}</p>
-          <p className="text-gray-500">{userData.email}</p>
+          <p className="font-bold">Name: {userData.name}</p>
+          <p className="text-gray-500">Email:{userData.email}</p>
           <p>Total Balance: ₹{userData.totalBalance}</p>
           <p>Available Balance: ₹{userData.availableBalance}</p>
           <p>Profit/Loss: ₹{userData.profitLoss}</p>

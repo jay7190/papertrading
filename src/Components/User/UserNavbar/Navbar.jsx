@@ -29,7 +29,7 @@ const Navbar = () => {
       <div className="navbar-left">
         <img
           src="logo2.png"
-          alt="Bullkit Logo"
+          alt="logo2"
           className="logo"
         />
         <span className="brand-name">PaperTradig</span>
@@ -51,20 +51,22 @@ const Navbar = () => {
       </div>
 
       {/* Logout Button with onClick */}
-      <div className="logout">
-        <Button
-          type="primary"
-          danger
-          icon={<LogoutOutlined />}
-          className="logoutbtn"
-          onClick={handleLogout} // Fix: Added onClick
-        >
-          Log Out
-        </Button>
-      </div>
-      <div className="profile-container">
-        <ProfileBtn />  
-      </div>
+      <space className="right">      
+        <div className="profile-container">
+            <ProfileBtn />  
+        </div>
+          <div className="logout">
+            <Button
+              type="primary"
+              danger
+              icon={<LogoutOutlined />}
+              className="logoutbtn"
+              onClick={handleLogout} // Fix: Added onClick
+            >
+              Log Out
+            </Button>
+          </div>
+      </space>  
     </nav>
   );
 };
