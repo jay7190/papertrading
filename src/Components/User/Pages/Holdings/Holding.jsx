@@ -27,7 +27,7 @@ const Holding = () => {
             const interval = setInterval(loadHoldings, 60000);
             return () => clearInterval(interval);
         }
-    }, [globalUser.holdings]);
+    }, [globalUser.holdings, globalUser.funds]);
 
     const loadHoldings = async () => {
         if (!auth.currentUser) return;
@@ -96,6 +96,70 @@ const Holding = () => {
             setError("Failed to load holdings");
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleBuy = async () => {
+        if (!selectedStock || !quantity) {
+            setError("Please enter a valid quantity");
+            return;
+        }
+
+        if (quantity <= 0) {
+            setError("Quantity must be greater than 0");
+            return;
+        }
+
+        const totalCost = quantity * selectedStock.marketPrice;
+        
+        if (totalCost > globalUser.funds) {
+            setError("Insufficient funds");
+            return;
+        }
+
+        try {
+            const holdings = { ...globalUser.holdings };
+            const holding = holdings[selectedStock.instrumentKey];
+
+            if (!holding) {
+                setError("Stock not found in holdings");
+                return;
+            }
+
+            const newQuantity = holding.quantity + quantity;
+            const newTotalInvestment = holding.totalInvestment + totalCost;
+            const newAvgPrice = newTotalInvestment / newQuantity;
+
+            holdings[selectedStock.instrumentKey] = {
+                ...holding,
+                quantity: newQuantity,
+                totalInvestment: newTotalInvestment,
+                avgPrice: newAvgPrice
+            };
+
+            // Update global state with trade information
+            await setGlobalUser({
+                ...globalUser,
+                funds: globalUser.funds - totalCost,
+                holdings: holdings,
+                lastTrade: {
+                    type: "BUY",
+                    symbol: selectedStock.symbol,
+                    quantity: quantity,
+                    price: selectedStock.marketPrice,
+                    total: totalCost,
+                    instrumentKey: selectedStock.instrumentKey,
+                    exchange: selectedStock.exchange,
+                    segment: selectedStock.segment,
+                    avgPrice: newAvgPrice,
+                    remainingQuantity: newQuantity
+                }
+            });
+
+            setShowModal(null);
+        } catch (error) {
+            console.error("Error buying stocks:", error);
+            setError("Failed to process purchase");
         }
     };
 
@@ -227,18 +291,62 @@ const Holding = () => {
                                 </div>
                             </td>
                             <td>
-                                <button
-                                    onClick={() => handleModal('sell', stock)}
-                                    className="sell-btn"
-                                    disabled={stock.quantity <= 0}
-                                >
-                                    Sell
-                                </button>
+                                <div className="action-buttons">
+                                    <button
+                                        onClick={() => handleModal('buy', stock)}
+                                        className="buy-btn"
+                                    >
+                                        Buy
+                                    </button>
+                                    <button
+                                        onClick={() => handleModal('sell', stock)}
+                                        className="sell-btn"
+                                        disabled={stock.quantity <= 0}
+                                    >
+                                        Sell
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            {showModal === 'buy' && selectedStock && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Buy {selectedStock.symbol}</h2>
+                        <p>Current Price: ₹{selectedStock.marketPrice}</p>
+                        <p>Available Funds: ₹{globalUser.funds.toFixed(2)}</p>
+                        <p>Current Holdings: {selectedStock.quantity} shares</p>
+                        <div className="input-group">
+                            <label>Quantity to Buy:</label>
+                            <input
+                                type="number"
+                                min="1"
+                                value={quantity}
+                                onChange={(e) => {
+                                    const newQuantity = parseInt(e.target.value) || 0;
+                                    if (newQuantity < 1) {
+                                        setError("Quantity must be at least 1");
+                                        setQuantity(1);
+                                    } else if (newQuantity * selectedStock.marketPrice > globalUser.funds) {
+                                        setError("Insufficient funds for this quantity");
+                                    } else {
+                                        setError(null);
+                                        setQuantity(newQuantity);
+                                    }
+                                }}
+                            />
+                        </div>
+                        <p>Total Cost: ₹{(quantity * selectedStock.marketPrice).toFixed(2)}</p>
+                        <div className="modal-actions">
+                            <button onClick={handleBuy} className="buy-btn">Confirm Buy</button>
+                            <button onClick={() => setShowModal(null)} className="cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {showModal === 'sell' && selectedStock && (
                 <div className="modal">
