@@ -1,0 +1,23 @@
+.SideBar{
+    display: flex;
+    flex-direction: column;
+    height: 86vh;
+    width: 250px;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+}
+
+.SideMenuVertical {
+    flex-grow: 1;
+}
+
+.logout-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.logout-button {
+    width: 100%;
+}
