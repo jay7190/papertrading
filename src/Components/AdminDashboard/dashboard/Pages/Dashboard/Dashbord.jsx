@@ -1,31 +1,30 @@
 import { useEffect, useState } from "react";
-import { Typography, Card, Statistic } from "antd";
-import {Space} from "antd";
+import { Typography, Card, Statistic, Space } from "antd";
 import {
   ShoppingCartOutlined,
   UserOutlined,
   TeamOutlined,
   StopOutlined,
 } from "@ant-design/icons";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, getDocs } from "firebase/firestore";
 import { db } from "../../../../../Firebase";
 
 function Dashboard() {
   const [totalUsers, setTotalUsers] = useState(0);
   const [activeUsers, setActiveUsers] = useState(0);
+  const [totalOrders, setTotalOrders] = useState(0);
 
   useEffect(() => {
     const usersCollection = collection(db, "users");
     const activeUsersCollection = collection(db, "activeUsers");
 
-    // Real-time listener for total users
     const unsubscribeTotalUsers = onSnapshot(usersCollection, (snapshot) => {
-      setTotalUsers(snapshot.size); // Count total users
+      setTotalUsers(snapshot.size);
+      fetchAllTransactions(snapshot.docs); // Fetch total orders when user data updates
     });
 
-    // Real-time listener for active users
     const unsubscribeActiveUsers = onSnapshot(activeUsersCollection, (snapshot) => {
-      setActiveUsers(snapshot.size); // Count active users
+      setActiveUsers(snapshot.size);
     });
 
     return () => {
@@ -34,10 +33,24 @@ function Dashboard() {
     };
   }, []);
 
+  const fetchAllTransactions = async (userDocs) => {
+    try {
+      let orderCount = 0;
+      for (const userDoc of userDocs) {
+        const transactionsRef = collection(db, "users", userDoc.id, "transactions");
+        const transactionsSnapshot = await getDocs(transactionsRef);
+        orderCount += transactionsSnapshot.size;
+      }
+      setTotalOrders(orderCount);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  };
+
   return (
     <div>
       <Typography.Title level={4}>Dashboard</Typography.Title>
-      <Space direction="horizontal">
+      <Space direction="horizontal" wrap>
         <DashboardCard
           icon={
             <TeamOutlined
@@ -81,7 +94,7 @@ function Dashboard() {
             />
           }
           title={"Orders"}
-          value={"-"} // Placeholder value (modify as needed)
+          value={totalOrders}
         />
         <DashboardCard
           icon={
@@ -96,7 +109,7 @@ function Dashboard() {
             />
           }
           title={"Suspended Users"}
-          value={"-"} // Placeholder value (modify as needed)
+          value={"-"} // Placeholder, to be implemented
         />
       </Space>
     </div>
@@ -106,9 +119,9 @@ function Dashboard() {
 // Dashboard Card Component
 function DashboardCard({ title, value, icon }) {
   return (
-    <Card style={{ textAlign: "center" }}>
+    <Card style={{ textAlign: "center", width: 240 }}>
       <Space direction="vertical" align="center">
-        <div style={{ display: "flex", justifyContent: "center" }}>{icon}</div>
+        <div>{icon}</div>
         <Statistic title={title} value={value ?? "..."} />
       </Space>
     </Card>
