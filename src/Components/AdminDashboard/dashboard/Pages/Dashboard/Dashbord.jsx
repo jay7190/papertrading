@@ -96,21 +96,6 @@ function Dashboard() {
           title={"Orders"}
           value={totalOrders}
         />
-        <DashboardCard
-          icon={
-            <StopOutlined
-              style={{
-                color: "blue",
-                backgroundColor: "rgba(176, 28, 28, 0.25)",
-                borderRadius: 16,
-                fontSize: 24,
-                padding: 20,
-              }}
-            />
-          }
-          title={"Suspended Users"}
-          value={"-"} // Placeholder, to be implemented
-        />
       </Space>
     </div>
   );
